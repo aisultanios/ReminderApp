@@ -7,13 +7,122 @@
 
 import UIKit
 
+extension ViewController {
+    
+    private struct Const {
+        static let ImageSizeForLargeState: CGFloat = 50
+        static let ImageRightMargin: CGFloat = 17.5
+        static let ImageBottomMarginForLargeState: CGFloat = 0
+        static let ImageBottomMarginForSmallState: CGFloat = 3
+        static let ImageSizeForSmallState: CGFloat = 40
+        static let NavBarHeightSmallState: CGFloat = 44
+        static let NavBarHeightLargeState: CGFloat = 96.5
+    }
+    
+}
+
 class ViewController: UIViewController {
 
+    let titleForNB: UILabel = {
+       
+        let label = UILabel()
+
+        return label
+        
+    }()
+    
+    lazy var addReminderBtn: UIButton = {
+       
+        let button = UIButton()
+        button.backgroundColor = UIColor.white
+        button.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular)), for: .normal)
+        button.tintColor = UIColor.black
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 40.0, weight: .thin)
+        button.titleLabel?.layer.masksToBounds = false
+        button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+        button.titleLabel?.layer.shadowOpacity = 0.5
+        button.titleLabel?.layer.shadowRadius = 10
+        button.titleLabel?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        button.addTarget(self, action: #selector(setReminder), for: .touchUpInside)
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        setNavBar()
+        setUpSubviews()
+        
     }
 
+    @objc func setReminder() {
+        
+        let presentViewController = SetReminderView()
+        presentViewController.modalPresentationStyle = .custom
+        presentViewController.transitioningDelegate = self
+        navigationController?.present(presentViewController, animated: true, completion: nil)
+        
+    }
+    
+    func setNavBar() {
+        
+        view.backgroundColor = UIColor.lightGray
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.backgroundColor = UIColor.lightGray
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationItem.largeTitleDisplayMode = .always
+        
+        let attributedString = NSMutableAttributedString(string: "Remindme", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 30.0, weight: .black)])
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location: 6, length: 2))
 
+        //titleForNB.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: view.frame.height)
+        titleForNB.textColor = UIColor.white
+        titleForNB.attributedText = attributedString
+        titleForNB.font = UIFont.systemFont(ofSize: 45.0, weight: .black)
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleForNB)
+        
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        navigationBar.addSubview(titleForNB)
+        
+        titleForNB.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleForNB.leftAnchor.constraint(equalTo: navigationBar.leftAnchor, constant: 20),
+            titleForNB.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -15),
+            titleForNB.heightAnchor.constraint(equalToConstant: Const.ImageSizeForSmallState),
+            titleForNB.widthAnchor.constraint(equalTo: navigationBar.widthAnchor)
+        ])
+        
+    }
+    
+    func setUpSubviews() {
+        
+        view.addSubview(addReminderBtn)
+        
+        addReminderBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            addReminderBtn.widthAnchor.constraint(equalToConstant: 75),
+            addReminderBtn.heightAnchor.constraint(equalToConstant: 75),
+            addReminderBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addReminderBtn.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        addReminderBtn.layer.cornerRadius = 75/2
+
+    }
+    
+}
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        
+        var controller: UIPresentationController? = nil
+        controller = PresentationController(presentedViewController: presented, presenting: presenting)
+
+        return controller
+    }
 }
 
