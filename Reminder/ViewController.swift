@@ -21,7 +21,7 @@ extension ViewController {
     
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalNotificationsModelOutput {
 
     let titleForNB: UILabel = {
        
@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         button.backgroundColor = UIColor.white
         button.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular)), for: .normal)
         button.tintColor = UIColor.black
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 40.0, weight: .thin)
         button.titleLabel?.layer.masksToBounds = false
         button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
         button.titleLabel?.layer.shadowOpacity = 0.5
@@ -48,14 +47,54 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private let viewModel: LocalNotificationsModel
+    
+    init(viewModel: LocalNotificationsModel) {
+      self.viewModel = viewModel
+      super.init(nibName: nil, bundle: nil)
+      self.viewModel.output = self
+    }
+    
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        
+        UNUserNotificationCenter.current()
+            .requestAuthorization(
+                options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+                    guard granted else { return }
+                    self?.getNotificationSettings()
+                }
+        
         setNavBar()
         setUpSubviews()
-        
+        fetchNotifications()
+    }
+    
+    //MARK: -ViewModelOutput
+    func updateView(notifications: [LocalNotifications]) {
+        print(notifications)
     }
 
+    private func fetchNotifications() {
+        viewModel.fetchNotifications()
+    }
+    
+    func getNotificationSettings() {
+      UNUserNotificationCenter.current().getNotificationSettings { settings in
+        guard settings.authorizationStatus == .authorized else { return }
+        DispatchQueue.main.async {
+          UIApplication.shared.registerForRemoteNotifications()
+        }
+      }
+    }
+    
     @objc func setReminder() {
         
         let presentViewController = SetReminderView()

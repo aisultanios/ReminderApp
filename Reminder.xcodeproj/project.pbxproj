@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2261576B290F9CAC0017EC5F /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261576A290F9CAC0017EC5F /* PresentationController.swift */; };
 		2261576D290F9CE90017EC5F /* SetReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261576C290F9CE90017EC5F /* SetReminderView.swift */; };
+		22AF0C742911B2910045FFE3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF0C732911B2910045FFE3 /* CoreDataStack.swift */; };
 		22D134F4290B45C400F05905 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D134F3290B45C400F05905 /* AppDelegate.swift */; };
 		22D134F6290B45C400F05905 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D134F5290B45C400F05905 /* SceneDelegate.swift */; };
 		22D134F8290B45C400F05905 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D134F7290B45C400F05905 /* ViewController.swift */; };
@@ -19,6 +20,8 @@
 		22D1350E290B45C500F05905 /* ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1350D290B45C500F05905 /* ReminderTests.swift */; };
 		22D13518290B45C500F05905 /* ReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D13517290B45C500F05905 /* ReminderUITests.swift */; };
 		22D1351A290B45C500F05905 /* ReminderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D13519290B45C500F05905 /* ReminderUITestsLaunchTests.swift */; };
+		22D5F30E2911C52D00061FE7 /* LocalNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5F30D2911C52D00061FE7 /* LocalNotificationsModel.swift */; };
+		22D5F3102911C57C00061FE7 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5F30F2911C57C00061FE7 /* LocalNotificationsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +44,7 @@
 /* Begin PBXFileReference section */
 		2261576A290F9CAC0017EC5F /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		2261576C290F9CE90017EC5F /* SetReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReminderView.swift; sourceTree = "<group>"; };
+		22AF0C732911B2910045FFE3 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		22D134F0290B45C400F05905 /* Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D134F3290B45C400F05905 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22D134F5290B45C400F05905 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +60,8 @@
 		22D13517290B45C500F05905 /* ReminderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUITests.swift; sourceTree = "<group>"; };
 		22D13519290B45C500F05905 /* ReminderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		22D13526290B466100F05905 /* Reminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Reminder.entitlements; sourceTree = "<group>"; };
+		22D5F30D2911C52D00061FE7 /* LocalNotificationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsModel.swift; sourceTree = "<group>"; };
+		22D5F30F2911C57C00061FE7 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +117,10 @@
 				22D134F5290B45C400F05905 /* SceneDelegate.swift */,
 				22D134F7290B45C400F05905 /* ViewController.swift */,
 				2261576C290F9CE90017EC5F /* SetReminderView.swift */,
+				22D5F30D2911C52D00061FE7 /* LocalNotificationsModel.swift */,
+				22D5F30F2911C57C00061FE7 /* LocalNotificationsService.swift */,
 				2261576A290F9CAC0017EC5F /* PresentationController.swift */,
+				22AF0C732911B2910045FFE3 /* CoreDataStack.swift */,
 				22D134F9290B45C400F05905 /* Main.storyboard */,
 				22D134FF290B45C500F05905 /* Assets.xcassets */,
 				22D13501290B45C500F05905 /* LaunchScreen.storyboard */,
@@ -269,11 +278,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22AF0C742911B2910045FFE3 /* CoreDataStack.swift in Sources */,
 				22D134F8290B45C400F05905 /* ViewController.swift in Sources */,
 				2261576D290F9CE90017EC5F /* SetReminderView.swift in Sources */,
 				22D134F4290B45C400F05905 /* AppDelegate.swift in Sources */,
 				22D134F6290B45C400F05905 /* SceneDelegate.swift in Sources */,
 				22D134FE290B45C400F05905 /* Reminder.xcdatamodeld in Sources */,
+				22D5F30E2911C52D00061FE7 /* LocalNotificationsModel.swift in Sources */,
+				22D5F3102911C57C00061FE7 /* LocalNotificationsService.swift in Sources */,
 				2261576B290F9CAC0017EC5F /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +467,7 @@
 				DEVELOPMENT_TEAM = 9ARMKSND23;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Reminder/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Remindme;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -487,6 +500,7 @@
 				DEVELOPMENT_TEAM = 9ARMKSND23;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Reminder/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Remindme;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

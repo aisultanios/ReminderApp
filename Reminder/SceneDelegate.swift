@@ -16,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
-            let vc = ViewController()
+            let localNotificationsService: LocalNotificationsService = LocalNotificationsService()
+            let viewModel = LocalNotificationsModel(localNotificationsServiceResponce: localNotificationsService)
+            let vc = ViewController(viewModel: viewModel)
             let navigationController = UINavigationController(rootViewController: vc)
             window.rootViewController = navigationController
             
