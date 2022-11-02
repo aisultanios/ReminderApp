@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		223CDD792912FE010099C9B0 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223CDD782912FE010099C9B0 /* ReminderCell.swift */; };
 		2261576B290F9CAC0017EC5F /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261576A290F9CAC0017EC5F /* PresentationController.swift */; };
 		2261576D290F9CE90017EC5F /* SetReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2261576C290F9CE90017EC5F /* SetReminderView.swift */; };
 		22AF0C742911B2910045FFE3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF0C732911B2910045FFE3 /* CoreDataStack.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		223CDD782912FE010099C9B0 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		2261576A290F9CAC0017EC5F /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		2261576C290F9CE90017EC5F /* SetReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReminderView.swift; sourceTree = "<group>"; };
 		22AF0C732911B2910045FFE3 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				22D134F3290B45C400F05905 /* AppDelegate.swift */,
 				22D134F5290B45C400F05905 /* SceneDelegate.swift */,
 				22D134F7290B45C400F05905 /* ViewController.swift */,
+				223CDD782912FE010099C9B0 /* ReminderCell.swift */,
 				2261576C290F9CE90017EC5F /* SetReminderView.swift */,
 				22D5F30D2911C52D00061FE7 /* LocalNotificationsModel.swift */,
 				22D5F30F2911C57C00061FE7 /* LocalNotificationsService.swift */,
@@ -279,6 +282,7 @@
 				2261576D290F9CE90017EC5F /* SetReminderView.swift in Sources */,
 				22D134F4290B45C400F05905 /* AppDelegate.swift in Sources */,
 				22D134F6290B45C400F05905 /* SceneDelegate.swift in Sources */,
+				223CDD792912FE010099C9B0 /* ReminderCell.swift in Sources */,
 				22D134FE290B45C400F05905 /* Reminder.xcdatamodeld in Sources */,
 				22D5F30E2911C52D00061FE7 /* LocalNotificationsModel.swift in Sources */,
 				22D5F3102911C57C00061FE7 /* LocalNotificationsService.swift in Sources */,
@@ -449,6 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Reminder/Reminder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -481,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Reminder/Reminder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

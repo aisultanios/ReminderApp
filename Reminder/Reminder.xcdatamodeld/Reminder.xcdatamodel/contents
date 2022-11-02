@@ -3,5 +3,6 @@
     <entity name="LocalNotifications" representedClassName="LocalNotifications" syncable="YES" codeGenerationType="class">
         <attribute name="dateOfUpcomingNotification" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="targetContentIdentifier" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
 </model>

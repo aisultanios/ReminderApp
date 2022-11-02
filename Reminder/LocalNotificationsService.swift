@@ -23,6 +23,7 @@ class CoreDataManager: LocalNotificationsService {
             //If there is no scheduled notifications we will delete data from the context
             if notifications.count == 0 {
                 CoreDataStack.deleteContext(entity: "LocalNotifications")
+                completion([LocalNotifications]())
             } else if notifications.count != 0 {
                 let notificationsList = CoreDataStack().loadUpcomingNotification()
                 completion(notificationsList)

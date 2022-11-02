@@ -13,6 +13,7 @@ class SetReminderView: UIViewController {
 
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
+    var pngSequenceArray: [UIImage] = []
     
     let titleLabel: UILabel = {
        
@@ -105,6 +106,17 @@ class SetReminderView: UIViewController {
         return datePicker
     }()
     
+    let gifView: UIImageView = {
+       
+        let gifView = UIImageView()
+        gifView.backgroundColor = UIColor.clear
+        gifView.layer.masksToBounds = true
+        gifView.layer.cornerRadius = 10
+        gifView.tintColor = UIColor.clear
+        
+        return gifView
+    }()
+    
     @objc func textDidChange(textField: UITextField) {
         
         if !remindMeToTextField.text!.isEmpty {
@@ -130,6 +142,7 @@ class SetReminderView: UIViewController {
     
     var notificationsList : [LocalNotifications] = []
     var pendingNotifications: [UNNotificationRequest] = []
+    var vc: ViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -249,62 +262,80 @@ class SetReminderView: UIViewController {
         contentOfNotification.title = "Reminder!"
         contentOfNotification.body = "Don't forget to \(remindMeToTextField.text!)"
         contentOfNotification.sound = .default
-        contentOfNotification.categoryIdentifier = "ReminderIdentifier"
+        contentOfNotification.categoryIdentifier = "ReminderTo\(remindMeToTextField.text!)Identifier"
         contentOfNotification.userInfo = ["value" : "Data with local notification"]
         
         let fireNotificationDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: datePickerForReminder.date)
         
         let triggerForNotifications = UNCalendarNotificationTrigger(dateMatching: fireNotificationDate, repeats: false)
-        let request = UNNotificationRequest(identifier: "ReminderIdentifier", content: contentOfNotification, trigger: triggerForNotifications)
+        let request = UNNotificationRequest(identifier: "ReminderTo\(remindMeToTextField.text!)Identifier", content: contentOfNotification, trigger: triggerForNotifications)
         
-        currentNotificationCenter.add(request) { (error) in
+        currentNotificationCenter.add(request) { [self] (error) in
             
             if error != nil {
                 print("Error = \(error?.localizedDescription ?? "Error in next workout reminder notifications")")
+            } else if error == nil {
+                
+                DispatchQueue.main.async { [self] in
+                    
+                    let newNotification = LocalNotifications(context: CoreDataStack.context)
+                    
+                    newNotification.dateOfUpcomingNotification = datePickerForReminder.date
+                    newNotification.targetContentIdentifier = contentOfNotification.targetContentIdentifier
+                    newNotification.title = "Don't forget to \(remindMeToTextField.text!)"
+                    
+                    CoreDataStack.saveContext()
+                 
+                    animateCheckmarkGif {
+                        self.dismiss(animated: true) {
+                            self.vc!.viewModel.fetchNotifications()
+                            self.vc?.tableView.reloadData()
+                            //vc.view.layoutSubviews()
+                        }
+                    }
+                    
+                    view.layoutIfNeeded()
+                    
+                }
+                
             }
             
         }
-        
-        let newNotification = LocalNotifications(context: CoreDataStack.context)
-        
-        newNotification.dateOfUpcomingNotification = datePickerForReminder.date
-        newNotification.targetContentIdentifier = contentOfNotification.targetContentIdentifier
-                    
-        CoreDataStack.saveContext()
-                
-        checkNotifications()
-        view.layoutIfNeeded()
         
     }
     
-    func checkNotifications() {
+    func animateCheckmarkGif(onComplete: @escaping() -> Void) {
         
-        notificationsList = CoreDataStack().loadUpcomingNotification()
-        let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests { (notifications) in
-             
-            print("Count: \(notifications.count)")
-            
-            for item in notifications {
-            
-                print(item.content)
-                self.pendingNotifications = notifications
-                
-            }
-            
-            if notifications.count == 0 {
-                CoreDataStack.deleteContext(entity: "LocalNotifications")
-            }
-            
+        remindMeToLbl.removeFromSuperview()
+        titleLabel.removeFromSuperview()
+        cancelBtn.removeFromSuperview()
+        remindMeToTextField.removeFromSuperview()
+        datePickerForReminder.removeFromSuperview()
+        setReminderBtn.removeFromSuperview()
+        
+        for i in 0...27 {
+            self.pngSequenceArray.append(UIImage(named: "icons8-проверено-2-\(i)")!)
         }
         
-        if !pendingNotifications.contains(where: {$0.content.targetContentIdentifier == notificationsList.last?.targetContentIdentifier}) {
-                        
+        self.view.addSubview(gifView)
+        gifView.translatesAutoresizingMaskIntoConstraints = false
+        
+        gifView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        gifView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        gifView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gifView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        gifView.animationImages = pngSequenceArray
+        gifView.animationRepeatCount = 1
+        gifView.animationDuration = 1.5
+        gifView.startAnimating()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [self] in
             
-            
-        } else if pendingNotifications.contains(where: {$0.content.targetContentIdentifier == notificationsList.last?.targetContentIdentifier}) {
-            
-            
+            gifView.stopAnimating()
+            gifView.removeFromSuperview()
+            pngSequenceArray.removeAll()
+            onComplete()
         }
         
     }

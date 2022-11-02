@@ -57,6 +57,31 @@ class CoreDataStack {
         return _notifications
     }
     
+    class func deleteReminder(reminderTitle: String) {
+        
+        let context = CoreDataStack.persistentContainer.viewContext
+        
+        do {
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "LocalNotifications")
+            
+            if let result = try context.fetch(request) as? [LocalNotifications] {
+//                for message in result {
+//                    context.delete(message)
+//                    try context.save()
+//                }
+                if result.contains(where: {$0.title == reminderTitle}) == true {
+                    context.delete(result.first(where: {$0.title == reminderTitle})!)
+                    try context.save()
+                }
+                
+            }
+            
+        } catch {
+            print("miss")
+        }
+        
+    }
+    
     class func deleteContext(entity: String) {
         
         let context = CoreDataStack.persistentContainer.viewContext
