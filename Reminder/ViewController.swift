@@ -65,25 +65,23 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalN
         let center = UNUserNotificationCenter.current()
         center.delegate = self
         
-        UNUserNotificationCenter.current()
-            .requestAuthorization(
-                options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-                    guard granted else { return }
-                    self?.getNotificationSettings()
-                }
+        UNUserNotificationCenter.current().requestAuthorization( options: [.alert, .sound, .badge]) { [weak self] granted, _ in
+            guard granted else { return }
+            self?.getNotificationSettings()
+        }
         
         setNavBar()
         setUpSubviews()
         fetchNotifications()
     }
+
+    private func fetchNotifications() {
+        viewModel.fetchNotifications()
+    }
     
     //MARK: -ViewModelOutput
     func updateView(notifications: [LocalNotifications]) {
         print(notifications)
-    }
-
-    private func fetchNotifications() {
-        viewModel.fetchNotifications()
     }
     
     func getNotificationSettings() {
@@ -164,4 +162,3 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         return controller
     }
 }
-

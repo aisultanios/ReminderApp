@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol LocalNotificationsServiceResponce {
+protocol LocalNotificationsService {
     func fetchUser(completion: @escaping ([LocalNotifications]) -> Void)
 }
 
-class LocalNotificationsService: LocalNotificationsServiceResponce {
+class CoreDataManager: LocalNotificationsService {
     
     func fetchUser(completion: @escaping ([LocalNotifications]) -> Void) {
         
@@ -23,11 +23,10 @@ class LocalNotificationsService: LocalNotificationsServiceResponce {
             //If there is no scheduled notifications we will delete data from the context
             if notifications.count == 0 {
                 CoreDataStack.deleteContext(entity: "LocalNotifications")
+            } else if notifications.count != 0 {
+                let notificationsList = CoreDataStack().loadUpcomingNotification()
+                completion(notificationsList)
             }
-         
-            let notificationsList = CoreDataStack().loadUpcomingNotification()
-            
-            completion(notificationsList)
             
         }
         

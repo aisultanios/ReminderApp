@@ -14,18 +14,21 @@ protocol LocalNotificationsModelOutput: AnyObject {
 class LocalNotificationsModel {
   
   weak var output: LocalNotificationsModelOutput?
-  private let localNotificationsServiceResponce: LocalNotificationsServiceResponce
+  private let localNotificationsService: LocalNotificationsService
   
-  init(localNotificationsServiceResponce: LocalNotificationsServiceResponce) {
-    self.localNotificationsServiceResponce = localNotificationsServiceResponce
+  init(localNotificationsService: LocalNotificationsService) {
+    self.localNotificationsService = localNotificationsService
   }
     
     func fetchNotifications() {
         
-        localNotificationsServiceResponce.fetchUser { notifications in
+        localNotificationsService.fetchUser { notifications in
             
-            self.output?.updateView(notifications: notifications)
-            
+            if notifications.count != 0 {
+                self.output?.updateView(notifications: notifications)
+            } else if notifications.count == 0 {
+                self.output?.updateView(notifications: [LocalNotifications]())
+            }
         }
         
     }
