@@ -50,6 +50,7 @@ class SetReminderView: UIViewController {
         textField.placeholder = "do homework"
         textField.keyboardType = .default
         textField.layer.cornerRadius = 5
+        textField.returnKeyType = .done
         textField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         
         textField.layer.masksToBounds = false
@@ -71,7 +72,8 @@ class SetReminderView: UIViewController {
         button.setTitleColor(.lightGray, for: .highlighted)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18.5, weight: .regular)
         button.addTarget(self, action: #selector(setReminder), for: .touchUpInside)
-        
+        button.isEnabled = false
+
         return button
     }()
     
@@ -87,7 +89,6 @@ class SetReminderView: UIViewController {
         button.layer.shadowRadius = 5
         button.layer.shadowOffset = CGSize(width: 0, height: 0)
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-        button.isEnabled = false
 
         return button
     }()
@@ -155,6 +156,8 @@ class SetReminderView: UIViewController {
         
         setViews()
         
+        remindMeToTextField.delegate = self
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -202,7 +205,7 @@ class SetReminderView: UIViewController {
         NSLayoutConstraint.activate([
             remindMeToTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             remindMeToTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            remindMeToTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -35),
+            remindMeToTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50),
             remindMeToTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
         
@@ -216,7 +219,7 @@ class SetReminderView: UIViewController {
         NSLayoutConstraint.activate([
             datePickerForReminder.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             datePickerForReminder.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            datePickerForReminder.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 15),
+            datePickerForReminder.topAnchor.constraint(equalTo: remindMeToTextField.bottomAnchor, constant: 10),
             datePickerForReminder.heightAnchor.constraint(equalToConstant: 40)
         ])
         
@@ -343,6 +346,13 @@ class SetReminderView: UIViewController {
 
 }
 
+extension SetReminderView: UITextFieldDelegate{
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 class TextFieldWithPadding: UITextField {
     var textPadding = UIEdgeInsets(
         top: 0,
@@ -360,5 +370,5 @@ class TextFieldWithPadding: UITextField {
         let rect = super.editingRect(forBounds: bounds)
         return rect.inset(by: textPadding)
     }
-    
+        
 }

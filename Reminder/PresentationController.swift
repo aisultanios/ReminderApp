@@ -20,8 +20,8 @@ class PresentationController: UIPresentationController {
     
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
 
-    var emptySpace: CGFloat = 0.575
-    var viewControllersSpace: CGFloat = 0.425
+    var emptySpace: CGFloat = 0.35
+    var viewControllersSpace: CGFloat = 0.65
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
