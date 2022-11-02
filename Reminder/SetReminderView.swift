@@ -87,7 +87,8 @@ class SetReminderView: UIViewController {
         button.layer.shadowRadius = 5
         button.layer.shadowOffset = CGSize(width: 0, height: 0)
         button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-        
+        button.isEnabled = false
+
         return button
     }()
     
