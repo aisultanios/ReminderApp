@@ -50,13 +50,14 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalN
     let tableView: UITableView = {
        
         let tableView = UITableView()
-        tableView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.06)
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = true
         tableView.indicatorStyle = .default
         tableView.showsHorizontalScrollIndicator = false
         tableView.isPagingEnabled = false
         tableView.register(ReminderCell.self, forCellReuseIdentifier: "Cell")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         return tableView
     }()
@@ -126,13 +127,15 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalN
     
     func setNavBar() {
         
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.175)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.backgroundColor = UIColor.lightGray
+        navigationController?.navigationBar.backgroundColor = UIColor.clear
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationItem.largeTitleDisplayMode = .always
         
         let attributedString = NSMutableAttributedString(string: "Remindme", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 30.0, weight: .black)])

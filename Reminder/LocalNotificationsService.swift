@@ -25,8 +25,14 @@ class CoreDataManager: LocalNotificationsService {
                 CoreDataStack.deleteContext(entity: "LocalNotifications")
                 completion([LocalNotifications]())
             } else if notifications.count != 0 {
-                let notificationsList = CoreDataStack().loadUpcomingNotification()
-                completion(notificationsList)
+                
+                center.getDeliveredNotifications { (deliveredNotifications) in
+                    for notification in deliveredNotifications {
+                        CoreDataStack.deleteReminder(reminderTitle: notification.request.identifier)
+                    }
+                    let notificationsList = CoreDataStack().loadUpcomingNotification()
+                    completion(notificationsList)
+                }
             }
             
         }
