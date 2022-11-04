@@ -26,13 +26,15 @@ class CoreDataManager: LocalNotificationsService {
                 completion([LocalNotifications]())
             } else if notifications.count != 0 {
                 
-                center.getDeliveredNotifications { (deliveredNotifications) in
-                    for notification in deliveredNotifications {
-                        CoreDataStack.deleteReminder(reminderTitle: notification.request.identifier)
+                var notificationsList = CoreDataStack().loadUpcomingNotification()
+                for i in 0..<notificationsList.count {
+                    if (notificationsList[i].dateOfUpcomingNotification!) < Date() {
+                        CoreDataStack.deleteReminder(reminderTitle: notificationsList[i].title!)
+                        notificationsList.remove(at: i)
                     }
-                    let notificationsList = CoreDataStack().loadUpcomingNotification()
-                    completion(notificationsList)
                 }
+                completion(notificationsList)
+                
             }
             
         }

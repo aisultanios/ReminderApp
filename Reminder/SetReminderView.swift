@@ -267,7 +267,7 @@ class SetReminderView: UIViewController {
         contentOfNotification.body = "Don't forget to \(remindMeToTextField.text!)"
         contentOfNotification.sound = .default
         contentOfNotification.categoryIdentifier = "ReminderTo\(remindMeToTextField.text!)Identifier"
-        contentOfNotification.userInfo = ["value" : "Data with local notification"]
+        contentOfNotification.userInfo = ["date" : Date()]
         
         let fireNotificationDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: datePickerForReminder.date)
         
