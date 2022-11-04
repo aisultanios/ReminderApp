@@ -8,7 +8,7 @@ Check out the article for this project:
 
 ![ezgif com-gif-maker-4](https://user-images.githubusercontent.com/36818367/200082433-3455e418-47f6-4d32-9f6a-9616e71b641a.gif)
 ![ezgif com-gif-maker-6](https://user-images.githubusercontent.com/36818367/200082696-a03bb724-121a-41eb-98a8-126a95a58c0d.gif)
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/36818367/200082507-d4b745cc-7dc9-436d-9957-8cad0a2e525f.gif)
+![ezgif com-gif-maker-7](https://user-images.githubusercontent.com/36818367/200082896-25ff6f7b-918b-4930-b682-48b73a1be9bf.gif)
 
 
 
