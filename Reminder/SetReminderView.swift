@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreData
-import CoreMIDI
 
 class SetReminderView: UIViewController {
 
@@ -142,8 +141,6 @@ class SetReminderView: UIViewController {
         
     }
     
-    var notificationsList : [LocalNotifications] = []
-    var pendingNotifications: [UNNotificationRequest] = []
     var vc: ViewController? = nil
     
     override func viewDidLoad() {
@@ -266,46 +263,38 @@ class SetReminderView: UIViewController {
         contentOfNotification.title = "Reminder!"
         contentOfNotification.body = "Don't forget to \(remindMeToTextField.text!)"
         contentOfNotification.sound = .default
-        contentOfNotification.categoryIdentifier = "ReminderTo\(remindMeToTextField.text!)Identifier"
         contentOfNotification.userInfo = ["date" : Date()]
         
         let fireNotificationDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: datePickerForReminder.date)
         
         let triggerForNotifications = UNCalendarNotificationTrigger(dateMatching: fireNotificationDate, repeats: false)
-        let request = UNNotificationRequest(identifier: "ReminderTo\(remindMeToTextField.text!)Identifier", content: contentOfNotification, trigger: triggerForNotifications)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: contentOfNotification, trigger: triggerForNotifications)
         
-        currentNotificationCenter.add(request) { [self] (error) in
+        DispatchQueue.main.async { [self] in
             
-            if error != nil {
-                print("Error = \(error?.localizedDescription ?? "Error in next workout reminder notifications")")
-            } else if error == nil {
+            currentNotificationCenter.add(request) { [self] (error) in
                 
-                DispatchQueue.main.async { [self] in
+                if error != nil {
+                    print("Error = \(error?.localizedDescription ?? "Error in next workout reminder notifications")")
+                } else if error == nil {
                     
-                    let newNotification = LocalNotifications(context: CoreDataStack.context)
-                    
-                    newNotification.dateOfUpcomingNotification = datePickerForReminder.date
-                    newNotification.targetContentIdentifier = contentOfNotification.targetContentIdentifier
-                    newNotification.title = "Don't forget to \(remindMeToTextField.text!)"
-                    
-                    CoreDataStack.saveContext()
-                 
-                    animateCheckmarkGif {
-                        self.dismiss(animated: true) {
-                            self.vc!.viewModel.fetchNotifications()
-                            self.vc?.tableView.reloadData()
-                            //vc.view.layoutSubviews()
+                    DispatchQueue.main.async { [self] in
+                        
+                        animateCheckmarkGif {
+                            self.dismiss(animated: true) {
+                                self.vc!.viewModel.fetchNotifications()
+                                self.vc?.tableView.reloadData()
+                            }
                         }
+                        view.layoutIfNeeded()
+
                     }
-                    
-                    view.layoutIfNeeded()
-                    
+                                        
                 }
                 
             }
             
         }
-        
     }
     
     func animateCheckmarkGif(onComplete: @escaping() -> Void) {

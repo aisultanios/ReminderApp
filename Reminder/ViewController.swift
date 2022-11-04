@@ -74,7 +74,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalN
       fatalError("init(coder:) has not been implemented")
     }
     
-    var notifications: [LocalNotifications] = []
+    var notifications: [UNNotificationRequest] = []
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
@@ -97,7 +97,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate, LocalN
     }
     
     //MARK: -ViewModelOutput
-    func updateView(notifications: [LocalNotifications]) {
+    func updateView(notifications: [UNNotificationRequest]) {
         if notifications.count == 0 {
             setUpSubviews(hasNotifications: false)
         } else if notifications.count > 0 {
@@ -244,9 +244,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ReminderCell
-        cell.titleOfReminder.text = notifications[indexPath.row].title
+        cell.titleOfReminder.text = notifications[indexPath.row].content.body
         dateFormatter.dateStyle = .full
-        cell.dateOfReminder.text = dateFormatter.string(from: notifications[indexPath.row].dateOfUpcomingNotification!)
+        cell.dateOfReminder.text = dateFormatter.string(from: notifications[indexPath.row].content.userInfo["date"] as! Date)
         cell.selectionStyle = .none
         
         return cell
@@ -269,7 +269,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alertController.addAction(UIAlertAction(title: "Delete", style: .destructive) { [self] _ in
                     
                 //deletes reminder from coredata and erases pending local notification
-                deleteReminder(remindersTitle: notifications[indexPath.row].title!, indexPath: indexPath)
+                deleteReminder(remindersTitle: notifications[indexPath.row].identifier, indexPath: indexPath)
 
             })
                        
@@ -280,7 +280,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func deleteReminder(remindersTitle: String, indexPath: IndexPath) {
-        CoreDataStack.deleteReminder(reminderTitle: remindersTitle)
         notifications.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [remindersTitle])

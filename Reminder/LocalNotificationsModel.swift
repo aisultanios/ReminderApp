@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LocalNotificationsModelOutput: AnyObject {
-  func updateView(notifications: [LocalNotifications])
+  func updateView(notifications: [UNNotificationRequest])
 }
 
 class LocalNotificationsModel {
@@ -22,12 +22,12 @@ class LocalNotificationsModel {
     
     func fetchNotifications() {
         
-        localNotificationsService.fetchUser { notifications in
+        localNotificationsService.fetchNotifications { notifications in
             
             if notifications.count != 0 {
                 self.output?.updateView(notifications: notifications)
             } else if notifications.count == 0 {
-                self.output?.updateView(notifications: [LocalNotifications]())
+                self.output?.updateView(notifications: [UNNotificationRequest]())
             }
         }
         

@@ -8,32 +8,25 @@
 import UIKit
 
 protocol LocalNotificationsService {
-    func fetchUser(completion: @escaping ([LocalNotifications]) -> Void)
+    func fetchNotifications(completion: @escaping ([UNNotificationRequest]) -> Void)
 }
 
-class CoreDataManager: LocalNotificationsService {
+class NotificationsApi: LocalNotificationsService {
     
-    func fetchUser(completion: @escaping ([LocalNotifications]) -> Void) {
+    func fetchNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
         
         let center = UNUserNotificationCenter.current()
         center.getPendingNotificationRequests { (notifications) in
-             
+            
             print("Count: \(notifications.count)")
             
-            //If there is no scheduled notifications we will delete data from the context
             if notifications.count == 0 {
-                CoreDataStack.deleteContext(entity: "LocalNotifications")
-                completion([LocalNotifications]())
+                
+                completion([UNNotificationRequest]())
+                
             } else if notifications.count != 0 {
                 
-                var notificationsList = CoreDataStack().loadUpcomingNotification()
-                for i in 0..<notificationsList.count {
-                    if (notificationsList[i].dateOfUpcomingNotification!) < Date() {
-                        CoreDataStack.deleteReminder(reminderTitle: notificationsList[i].title!)
-                        notificationsList.remove(at: i)
-                    }
-                }
-                completion(notificationsList)
+                completion(notifications)
                 
             }
             
