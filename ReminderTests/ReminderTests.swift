@@ -10,27 +10,81 @@ import XCTest
 
 final class ReminderTests: XCTestCase {
 
+    private var sut: LocalNotificationsModel! //sut - System Under Test
+    private var localNotificationsService: MockLocalNotificationsService!
+    private var output: MockLocalNotificationsOutput!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        output = MockLocalNotificationsOutput()
+        localNotificationsService = MockLocalNotificationsService()
+        sut = LocalNotificationsModel(localNotificationsService: localNotificationsService)
+        sut.output = output
+        
+        try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
+        sut = nil
+        localNotificationsService = nil
+        
+        try super.tearDownWithError()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func testExample_whenHasPendingNotifications() throws {
+        
+        //given
+        let contentOfNotification = UNMutableNotificationContent()
+        contentOfNotification.title = "Reminder!"
+        contentOfNotification.body = "Don't forget to do something"
+        contentOfNotification.sound = .default
+        contentOfNotification.userInfo = ["date" : Date()]
+        
+        let fireNotificationDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: Date(timeIntervalSinceNow: 10000))
+        let triggerForNotification = UNCalendarNotificationTrigger(dateMatching: fireNotificationDate, repeats: false)
+        
+        let notification = UNNotificationRequest(identifier: UUID().uuidString, content: contentOfNotification, trigger: triggerForNotification)
+        localNotificationsService.localNotificationMockResult = [notification]
+        //when
+        sut.fetchNotifications()
+        //then
+        XCTAssertEqual(output.updateViewArray.count, 1)
+        XCTAssertEqual(output.updateViewArray[0].content, contentOfNotification)
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    }
+    
+    func testExample_whenDoesntHavePendingNotifications() throws {
+        
+        //given
+        localNotificationsService.localNotificationMockResult = [UNNotificationRequest]()
+        //when
+        sut.fetchNotifications()
+        //then
+        XCTAssertEqual(output.updateViewArray.count, 0)
+        
+    }
+    
+}
+
+class MockLocalNotificationsService: LocalNotificationsService {
+    
+    var localNotificationMockResult: Array<UNNotificationRequest>?
+    
+    func fetchNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
+        if let notification = localNotificationMockResult {
+            completion(notification)
         }
     }
+    
+}
 
+class MockLocalNotificationsOutput: LocalNotificationsModelOutput {
+    
+    var updateViewArray: [UNNotificationRequest] = []
+    
+    func updateView(notifications: [UNNotificationRequest]) {
+        updateViewArray.append(contentsOf: notifications)
+    }
+    
 }
