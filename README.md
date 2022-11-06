@@ -4,7 +4,7 @@ Scheduling Local Notifications(To store date), Custom popOverView(MVVM, Local No
 Hi guys! In this repository you will find the code for custom implementation of UIPresentationController, Scheduling Local notifications
 and also storing your custom data in them. I will also show you how to do Unit Testing and we will implement the MVVM Binding Pattern in this project!
 
-Check out the article for this project: 
+Check out the article for this project: https://medium.com/@aisultan.askarov/scheduling-local-notifications-to-store-date-custom-popoverview-mvvm-local-notifications-65195404c497
 
 Here we are scheduling local notification and setting it's time using UIDatePickerView, and also passing a title for it.
 
