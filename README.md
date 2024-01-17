@@ -1,5 +1,5 @@
 # ReminderApp
-Scheduling Local Notifications(To store date), Custom popOverView(MVVM, Local Notifications, UIPresentationController, and UnitTesting).
+Scheduling Local Notifications, Custom popOverView(MVVM, Local Notifications, UIPresentationController, and UnitTesting).
 
 Hi guys! In this repository you will find the code for custom implementation of UIPresentationController, Scheduling Local notifications
 and also storing your custom data in them. I will also show you how to do Unit Testing and we will implement the MVVM Binding Pattern in this project!
