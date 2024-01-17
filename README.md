@@ -1,7 +1,7 @@
 # 📝 ReminderApp
 
 #### ReminderApp is a project that I have developed for learning purposes quite a long time ago. This is the refreshed version that converted an app from a simple reminder scheduler to a to-do list app. I've built it using UIKit and MVVM pattern for it's business logic. This project is a complete app with a responsive UI and complete business logic.
-#### Follow my tutorial where I explains step-by-step hot to implement this project [HERE](https://medium.com/@aisultan.askarov/scheduling-local-notifications-to-store-date-custom-popoverview-mvvm-local-notifications-65195404c497)
+#### Follow my tutorial where I explain step-by-step how to implement this project [HERE](https://medium.com/@aisultan.askarov/scheduling-local-notifications-to-store-date-custom-popoverview-mvvm-local-notifications-65195404c497)
 
 ## 📦 Technologies:
 
