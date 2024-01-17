@@ -1,20 +1,32 @@
-# ReminderApp
-Scheduling Local Notifications, Custom popOverView(MVVM, Local Notifications, UIPresentationController, and UnitTesting).
+# 📝 ReminderApp
 
-Hi guys! In this repository you will find the code for custom implementation of UIPresentationController, Scheduling Local notifications
-and also storing your custom data in them. I will also show you how to do Unit Testing and we will implement the MVVM Binding Pattern in this project!
+#### ReminderApp is a project that I have developed for learning purposes quite a long time ago. This is the refreshed version that converted an app from a simple reminder scheduler to a to-do list app. I've built it using UIKit and MVVM pattern for it's business logic. This project is a complete app with a responsive UI and complete business logic.
+#### Follow my tutorial where I explains step-by-step hot to implement this project [HERE](https://medium.com/@aisultan.askarov/scheduling-local-notifications-to-store-date-custom-popoverview-mvvm-local-notifications-65195404c497)
 
-Check out the article for this project: https://medium.com/@aisultan.askarov/scheduling-local-notifications-to-store-date-custom-popoverview-mvvm-local-notifications-65195404c497
+## 📦 Technologies:
 
-Here we are scheduling local notification and setting it's time using UIDatePickerView, and also passing a title for it.
+* UIKit
+* MVVM
+* Unit Testing
+* CoreData
+* Local Notifications
+
+## 🚦 Running the Project
+
+To run the project on your device, follow these steps:
+
+* Clone the repository to your local machine.
+* This project doesn't use any third-party libraries, so just build it and it should work.
+
+## Setting a reminder.
 
 ![ezgif com-gif-maker-4](https://user-images.githubusercontent.com/36818367/200082433-3455e418-47f6-4d32-9f6a-9616e71b641a.gif)
 
-This is the proccess of deleting the scheduled notification.
+## Deleting reminders.
 
 ![ezgif com-gif-maker-6](https://user-images.githubusercontent.com/36818367/200082696-a03bb724-121a-41eb-98a8-126a95a58c0d.gif)
 
-This is the way it is presented when triggered.
+## Firing notification.
 
 ![ezgif com-gif-maker-7](https://user-images.githubusercontent.com/36818367/200082896-25ff6f7b-918b-4930-b682-48b73a1be9bf.gif)
 
